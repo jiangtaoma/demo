@@ -1,0 +1,218 @@
+﻿环境变量m2_home
+D:\ide\maven\apache-maven-3.6.2
+配置文件(m2/settings.xml)
+M2_HOME/conf/settings.xml
+自定义本地仓库
+<localRepository>D:/ide/maven/m2/repository</localRepository>
+本地设置
+<offline>true</offline>
+自定义远程镜像
+<mirror>  
+  <id>nexus-aliyun</id>  
+  <mirrorOf>central</mirrorOf>    
+  <name>Nexus aliyun</name>
+  <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+</mirror>
+
+
+
+
+
+maven常用命令
+mvn compile	编译,生成target(在pom.xml包下执行命令)
+mvn clean	清空,清除target
+mvn test	测试,编译并测试(测试需要test/java代码)
+mvn package	打包,编译测试打jar包
+mvn install	安装,打包并上传本地仓库 
+modelVersion模型版本(默认4.0.0)
+groupId		目录名
+artifactId	项目名
+version		项目的版本 
+mvn archetype:generate	创建项目
+-DgroupId=package	包的目录名
+-DartifactId=demo	项目名
+-DarchetypeArtifactId=maven-archetype-quickstart java项目
+-DarchetypeArtifactId=maven-archetype-webapp	web项目
+-DinteractiveMode=false 人机互动模式
+
+
+
+
+添加jar包到本地仓库
+mvn install:install-file 
+-Dfile=D:/ide/maven/jar/majt-1.0.jar 
+-DgroupId=packageName
+-DartifactId=projectName
+-Dversion=1.0
+-Dpackaging=jar
+引入jar包到项目(pom.xml文件中添加jar的坐标)
+<properties>
+	<version>1.0</version>
+</properties>
+<dependency>
+	<groupId>packageName</groupId>
+	<artifactId>projectName</artifactId>
+	<version>${version}</version>
+ </dependency>
+ 
+ 
+ 
+
+maven创建java项目
+mvn archetype:generate -DgroupId=com.majt -DartifactId=demo
+ -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+maven创建web项目
+mvn archetype:generate -DgroupId=com.majt -DartifactId=webdemo 
+-DarchetypeArtifactId=maven-archetype-webapp -DinteractiveMode=false
+手动添加maven本地仓jia包
+mvn install:install-file -Dfile=D:\ojdbc14-10.2.0.3.0.jar 
+-DgroupId=oracle -DartifactId=ojdbc14 -Dversion=10.2.0.3.0 -Dpackaging=jar
+jar包存放路径
+m2\repository\com\oracle\ojdbc14\10.2.0.3.0\ojdbc14-10.2.0.3.0.jar
+项目引用maven本地仓jia包
+<dependency>
+	<groupId>com.oracle</groupId>
+	<artifactId>ojdbc14</artifactId>
+	<version>10.2.0.3.0</version>
+ </dependency>
+ 
+ 
+ 
+ 
+
+maven下载源码配置
+Window->Preferences->Maven->Download->Artifact Sources
+eclipse创建maven项目
+file->new->other->maven->maven project->
+create a simple project(skip archetype selection)
+->group id : com.majt.demo
+->artifact id : demo
+->version : 1.0
+->packaging : jar(pom创建父项目)
+->name : demo
+->description : com.majt.demo with multi module
+eclipse创建maven子项目(相对与夫项目)
+file->new->other->maven->maven module
+->create a simple project(skip archetype selection)
+->module name : demo1
+->parent project : demo
+
+
+
+
+eclipse编译maven项目
+Maven assembly:assembly:完整装配,包括编译class,测试,打包等
+Maven build:编译class
+Maven build..:编译class,可带命令
+Maven clean:对项目进行清理
+Maven generate-sources:构建源码,也就是打包生成jar
+Maven install:生成对应的package包,发布至本地仓库
+Maven package:测试并且打包
+Maven source:jar:生成带源码的jar用于导入使用
+Maven test:先自动进行编译，在运行所有的测试用例
+maven项目刷新的几种方法
+1project->clean...
+2maven项目->右键->refresh刷新
+3maven项目->右键->maven->update project...
+4maven项目->右键->maven->disable maven nature(maven标识消失)
+->configure-->convert to maven project
+
+maven install 程序包xxx不存在或错误:找不到符号
+删除仓库中的xxx包，并且project->clean->clean all->maven install
+
+
+关于mybatis自动扫入Mapper.xml的配置
+	<!-- Spring会自动查找dao包中的类,等价于<mybatis:scan /> -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.java1234.**.dao" />
+	</bean>
+	<!-- mybatis自动扫描(若class与xml同名同包则同时扫入Mapper.xml) -->
+<!-- 	<mybatis:scan base-package="com.java1234.**.dao"/> -->
+	<!-- 配置mybatis的sqlSessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 若class与xml不同名或不同包则需要自动扫描Mapper.xml文件配置 -->
+		<!-- classpath只加载当前工程而classpath*加载所以引入的工程 -->
+<!-- 	<property name="mapperLocations" value="classpath*:com/java1234/**/dao/*Mapper.xml"></property> -->
+		<!-- mybatis配置文件 -->
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+	</bean>
+	
+
+ 
+ 
+git初旅
+配置账号和邮箱
+git config --global user.name jiangtaoma
+git config --global user.email maumoon@qq.com
+设置github公钥(注意公钥末尾空格)
+ssh-keygen(ssh-keygen -t rsa -C maumoon@qq.com)
+验证github公钥
+ssh -T git@github.com(yes)
+选择一个主目录(repository)
+git init
+查看主目录
+ls -a
+删除主目录
+rm -r .git
+添加文件
+git add readme/readme2.txt
+git add d:/ide/workspace/maven/readme/readme1.txt
+
+
+
+git项目添加
+maven项目->右键->Team->Share project->Repository->
+Repository directory:D:\ide\git->Finish->select demo->Finish
+git项目断开
+maven项目->右键->Team->Disconnect
+项目目录文件设置提交忽略(target->Team->Ignore)
+项目设置远程推送
+maven项目->右键->Team->Remote->Push->
+URI:https://github.com/jiangtaoma/demo.git
+User:253108613@qq.com
+Password:majt1987
+Can't connect to any URI:...(cannot open git-receive-pack)
+在eclipse.init启动文件末加如下配置
+-Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2
+Sources ref:master[branch]->
+Destination ref:master[branch]->
+Add Spec->Finish
+
+
+
+添加文件并推送至远程仓库
+maven项目->右键->Team->Commit->Commit and Push
+Pushed to maven - origin->
+master->master[xxxxx]->ok
+如果有异常如下处理:
+master->master[rejected - non-fast-forward]
+Configure->Push URIs->Add
+Ref mappings->Add->Save and Push
+git基本设置
+Window->Preferences->Team->Git->Default repository folder
+设置忽略提交文件
+Window->Preferences->Team->Git->Ignored Resources
+	
+	
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+	
