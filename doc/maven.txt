@@ -74,10 +74,10 @@ m2\repository\com\oracle\ojdbc14\10.2.0.3.0\ojdbc14-10.2.0.3.0.jar
 	<version>10.2.0.3.0</version>
  </dependency>
  
+mvn test
+mvn install
+mvn install:install-file -Dfile=D:\ojdbc14-10.2.0.3.0.jar -DgroupId=oracle -DartifactId=ojdbc14 -Dversion=10.2.0.3.0 -Dpackaging=jar
  
- 
- 
-
 maven下载源码配置
 Window->Preferences->Maven->Download->Artifact Sources
 eclipse创建maven项目
